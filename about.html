@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stackly</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* ================= LOADER ================= */
+.loader{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#b30000,#2b2b2b);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  z-index:9999;
+}
+
+.loader h1{
+  font-size:36px;
+  letter-spacing:3px;
+  margin-bottom:40px;
+}
+
+.vehicles{
+  display:flex;
+  gap:40px;
+}
+
+.vehicle{
+  font-size:44px;
+  animation:move 1.4s infinite ease-in-out;
+}
+
+.vehicle:nth-child(2){ animation-delay:.2s; }
+.vehicle:nth-child(3){ animation-delay:.4s; }
+
+@keyframes move{
+  0%{ transform:translateX(0); opacity:.6; }
+  50%{ transform:translateX(35px); opacity:1; }
+  100%{ transform:translateX(0); opacity:.6; }
+}
+
+.loading-text{
+  margin-top:30px;
+  font-size:14px;
+  letter-spacing:2px;
+  opacity:.8;
+}
+
+/* ================= HOME PAGE ================= */
+.home{
+  display:none;
+  min-height:100vh;
+  background:#f2f2f2;
+  padding:40px;
+}
+
+.home h2{
+  color:#b30000;
+  margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <h1>STACKLY</h1>
+
+  <div class="vehicles">
+    <div class="vehicle"><i class="fa-solid fa-plane"></i></div>
+    <div class="vehicle"><i class="fa-solid fa-bus"></i></div>
+    <div class="vehicle"><i class="fa-solid fa-train"></i></div>
+  </div>
+
+  <div class="loading-text">Loading, please wait...</div>
+</div>
+
+<script>
+/* SHOW HOME AFTER LOADING */
+setTimeout(()=>{
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("home").style.display = "block";
+},2000);
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stackly Header</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+:root{
+  --header-height:80px;
+}
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  height:var(--header-height);
+  padding:15px 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(135deg,#ff1e1e 40%, #505050 40%);
+  z-index:10000;
+}
+
+.logo img{
+  height:42px;
+}
+
+/* NAV */
+.nav ul{
+  list-style:none;
+  display:flex;
+  gap:25px;
+}
+
+.nav a{
+  text-decoration:none;
+  color:#fff;
+  font-weight:500;
+}
+
+/* SIGN IN */
+.sign-in{
+  background:#ff1e1e;
+  color:#fff;
+  border:none;
+  padding:10px 22px;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+/* DESKTOP DROPDOWN */
+.dropdown-menu{
+  position:fixed;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+  display:none;
+  min-width:220px;
+  z-index:20000;
+}
+
+.dropdown-menu li{
+  list-style:none;
+  padding:12px 20px;
+}
+.dropdown-menu li:hover{
+  background:#f5f5f5;
+}
+.dropdown-menu a{
+  color:#ffffff;
+  text-decoration:none;
+}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;
+  font-size:26px;
+  background:#fff;
+  padding:8px 12px;
+  border-radius:50%;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav,.sign-in{
+    display:none;
+  }
+  .hamburger{
+    display:block;
+  }
+}
+
+/* MOBILE MENU */
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  transform:translateX(100%);
+  transition:.4s ease;
+  z-index:30000;
+  padding:30px;
+}
+
+.mobile-menu.active{
+  transform:translateX(0);
+}
+
+.mobile-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.mobile-top img{
+  height:40px;
+}
+
+.mobile-close{
+  font-size:26px;
+  cursor:pointer;
+}
+
+.mobile-menu ul{
+  list-style:none;
+  margin-top:40px;
+}
+
+.mobile-menu li{
+  padding:16px 0;
+  font-size:20px;
+  border-bottom:1px solid #eee;
+  cursor:pointer;
+}
+
+.mobile-dropdown{
+  display:none;
+  padding-left:20px;
+  font-size:18px;
+}
+
+.mobile-auth{
+  margin-top:40px;
+}
+
+.mobile-auth button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  margin-top:12px;
+}
+
+.mobile-login{
+  background:#ff1e1e;
+  color:#fff;
+}
+
+.mobile-signup{
+  background:#111;
+  color:#fff;
+}
+
+/* PAGE SPACE */
+body{
+  padding-top:var(--header-height);
+}
+/* keep dropdown below Home2 */
+.home-dropdown {
+  position: relative;
+}
+
+/* dropdown box */
+.home-menu {
+  position: absolute;
+  top: 100%;   /* 👈 BELOW Home2 */
+  left: 0;
+  background: #000000;
+  min-width: 170px;
+  border-radius: 12px;
+  padding: 10px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  display: none;
+  z-index: 999;
+}
+
+/* links */
+.home-menu a {
+  display: block;
+  padding: 10px 18px;
+  text-decoration: none;
+  color: #fff5f5;
+}
+
+.home-menu a:hover {
+  background: #4b4a4a;
+}
+.tickets-item{
+  color:#ff4d4d;
+  border-bottom:2px solid #ff4d4d;
+  padding-bottom:4px;
+}
+.tickets-item{
+  color:#ff4d4d;
+  text-shadow:0 0 8px rgba(255,77,77,0.8);
+}
+/* show on click */
+.home-menu.visible {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <img src="logo.webp" alt="Stackly Logo">
+  </div>
+
+  <nav class="nav">
+    <ul>
+      <li class="home-dropdown">
+  <a href="home.html">Home</a>
+  <span id="arrowBtn" style="cursor:pointer; margin-left:5px;">▾</span>
+
+  <div class="home-menu">
+    <a href="home2.html">Home 2</a>
+  </div>
+</li>
+      <li><a href="about.html" style="color:#ff4d4d;">About</a></li>
+      <li><a href="tickets.html">Tickets</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="Dashboard.html">Dashboard</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <button class="sign-in" onclick="location.href='login.html'">Sign In</button>
+
+  <div class="hamburger" onclick="openMobileMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+</header>
+
+<!-- DESKTOP DROPDOWN -->
+<ul class="dropdown-menu" id="desktopDropdown">
+  <li><a href="home.html">Home </a></li>
+</ul>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-top">
+    <img src="logo.webp" alt="Stackly Logo">
+    <span class="mobile-close" onclick="closeMobileMenu()">✕</span>
+  </div>
+
+  <ul>
+    <li onclick="toggleMobileDropdown()">Home ▾</li>
+    <ul class="mobile-dropdown" id="mobileDropdown">
+      <li onclick="location.href='home2.html'">Home 2</li>
+    </ul>
+    <li>
+  <li class="tickets-item" onclick="location.href='about.html'">About</li>
+    <li onclick="location.href='tickets.html'">Tickets</li>
+    <li onclick="location.href='blog.html'">Blog</li>
+    <li onclick="location.href='Dashboard.html'">Dashboard</li>
+    <li onclick="location.href='contact.html'">Contact</li>
+  </ul>
+
+  <div class="mobile-auth">
+    <button class="mobile-login" onclick="location.href='login.html'">Sign In</button>
+    <button class="mobile-signup" onclick="location.href='login.html'">Sign Up</button>
+  </div>
+</div>
+
+<script>
+/* DESKTOP DROPDOWN */
+const arrowBtn = document.getElementById("arrowBtn");
+const homeMenu = document.querySelector(".home-menu");
+const homeDropdown = document.querySelector(".home-dropdown");
+
+arrowBtn.onclick = (e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+  homeMenu.classList.toggle("visible");
+};
+
+document.addEventListener("click", (e)=>{
+  if (!homeDropdown.contains(e.target)) {
+    homeMenu.classList.remove("visible");
+  }
+});
+
+/* MOBILE MENU */
+function openMobileMenu(){
+  document.getElementById("mobileMenu").classList.add("active");
+}
+function closeMobileMenu(){
+  document.getElementById("mobileMenu").classList.remove("active");
+}
+function toggleMobileDropdown(){
+  const d = document.getElementById("mobileDropdown");
+  d.style.display = d.style.display === "block" ? "none" : "block";
+}
+</script>
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <h1>ABOUT</h1>
+
+    <div class="breadcrumb">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+      <span class="sep">✕</span>
+      <span class="active">ABOUT</span>
+    </div>
+  </div>
+</section>
+<style>
+  /* ===== HERO SECTION ===== */
+.hero{
+  position:relative;
+  height:280px;
+  border-radius:20px;
+  margin:20px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(179,0,0,0.45), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(90,90,90,0.6), transparent 45%),
+    linear-gradient(135deg, #1f1f1f, #b30000);
+}
+
+/* WAVY EFFECT */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      120deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.05) 2px,
+      transparent 2px,
+      transparent 12px
+    );
+  opacity:0.3;
+}
+
+/* DARK OVERLAY */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+}
+
+/* CONTENT */
+.hero-content{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  text-align:center;
+}
+
+.hero-content h1{
+  font-size:46px;
+  font-weight:700;
+  margin-bottom:12px;
+  letter-spacing:1px;
+}
+
+/* BREADCRUMB */
+.breadcrumb{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,0.1);
+  padding:8px 16px;
+  border-radius:30px;
+  backdrop-filter:blur(6px);
+  font-size:14px;
+}
+
+.breadcrumb i{
+  color:#ff4d4d;
+}
+
+.breadcrumb .sep{
+  opacity:0.6;
+}
+
+.breadcrumb .active{
+  color:#ff6b6b;
+  font-weight:600;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero{
+    height:220px;
+  }
+
+  .hero-content h1{
+    font-size:32px;
+  }
+}
+</style>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body{
+  background:#f5f7fa;
+}
+
+/* ===== HERO LANDING ===== */
+.about-landing{
+  background: url("airways.webp")center/cover no-repeat;
+  padding: 60px 20px 100px;
+}
+
+.booking-card{
+  max-width: 1100px;
+  margin: auto;
+  background:#000000;
+  border-radius:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  padding:30px;
+  /* ===== MOBILE VIEW ===== */
+@media (max-width: 768px) {
+
+  /* booking card padding */
+  .booking-card {
+    padding: 20px;
+  }
+
+  /* icons row → scrollable */
+  .booking-menu {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 25px;
+    padding-bottom: 10px;
+  }
+
+  .booking-menu label {
+    min-width: 70px;
+    font-size: 14px;
+  }
+
+  .booking-menu label i {
+    font-size: 22px;
+  }
+
+  /* search form stack */
+  
+  .booking-form {
+    background-color: #505050;
+    grid-template-columns: 1fr; /* stack vertically */
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .input-box {
+    padding: 14px;
+  }
+
+  .input-box input {
+    font-size: 20px;
+  }
+
+  /* date input size */
+  .input-box input[type="date"] {
+    font-size: 18px;
+  }
+
+  /* search button full width */
+  .search-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .search-btn button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+  }
+}@media (max-width: 768px) {
+
+  /* stack everything vertically */
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* From */
+  .booking-form .input-box:nth-child(1) {
+    order: 1;
+  }
+
+  /* To */
+  .booking-form .input-box:nth-child(2) {
+    order: 2;
+  }
+
+  /* Travel Date → BELOW From & To */
+  .booking-form .input-box:nth-child(3) {
+    order: 3;
+  }
+
+  /* Search button last */
+  .search-btn {
+    order: 4;
+  }
+
+}
+}
+
+/* TOP ICON MENU */
+.booking-menu{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:20px;
+  text-align:center;
+}
+
+.booking-menu div{
+  flex:1;
+  min-width:80px;
+  color:#000000;
+}
+
+.booking-menu i{
+  font-size:24px;
+  margin-bottom:6px;
+}
+
+.booking-menu .active{
+  color:#007bff;
+  font-weight:600;
+}
+
+/* SEARCH SECTION */
+.booking-form{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap:20px;
+}
+
+.input-box{
+  border:1px solid #000000;
+  border-radius:12px;
+  padding:18px;
+}
+
+.input-box span{
+  font-size:14px;
+  color:#000000;
+}
+
+.input-box h2{
+  margin-top:6px;
+}
+
+.search-btn{
+  grid-column:1 / -1;
+  margin:auto;
+  margin-top:10px;
+}
+
+.search-btn button{
+  background:#2f80ff;
+  color:#000000;
+  border:none;
+  padding:14px 60px;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* ===== ABOUT CONTENT ===== */
+.about-content{
+  max-width:1100px;
+  margin:80px auto;
+  padding:0 20px;
+}
+
+.about-content h1{
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+.about-content p{
+  font-size:18px;
+  line-height:1.7;
+  color:#080707;
+}
+.booking-menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  text-align: center;
+}
+
+.booking-menu input {
+  display: none;
+}
+
+.booking-menu label {
+  flex: 1;
+  cursor: pointer;
+  color: #000000;
+  transition: 0.3s ease;
+}
+
+.booking-menu label i {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* ACTIVE (RED) */
+.booking-menu input:checked + label {
+  color: #e60023; /* 🔴 RED */
+  font-weight: 600;
+}
+
+.booking-menu input:checked + label i {
+  transform: scale(1.1);
+}
+
+/* touch feedback */
+.booking-menu label:active {
+  transform: scale(0.95);
+}
+.input-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 26px;
+  font-weight: 600;
+  margin-top: 6px;
+  color: #cd0707;
+}
+
+.input-box input[type="date"] {
+  font-size: 22px;
+}
+
+.input-box input::placeholder {
+  color: #000000;
+  font-weight: 500;
+}
+/* ===== MOBILE VIEW FIX (REAL ONE) ===== */
+@media (max-width: 768px) {
+
+  .booking-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* From | To */
+    gap: 16px;
+  }
+
+  /* From */
+  .booking-form .input-box:nth-child(1) {
+    grid-column: 1 / 2;
+  }
+
+  /* To */
+  .booking-form .input-box:nth-child(2) {
+    grid-column: 2 / 3;
+  }
+
+  /* Travel Date → FULL WIDTH BELOW */
+  .booking-form .input-box:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  /* Search button → FULL WIDTH */
+  .search-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .search-btn button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== LANDING SECTION ===== -->
+<section class="about-landing">
+
+  <div class="booking-menu">
+
+  <input type="radio" name="service" id="flight" checked>
+  <label for="flight">
+    <i class="fa-solid fa-plane"></i>
+    <span>Flights</span>
+  </label>
+
+  <input type="radio" name="service" id="hotel">
+  <label for="hotel">
+    <i class="fa-solid fa-hotel"></i>
+    <span>Hotels</span>
+  </label>
+
+  <input type="radio" name="service" id="train">
+  <label for="train">
+    <i class="fa-solid fa-train"></i>
+    <span>Trains</span>
+  </label>
+
+  <input type="radio" name="service" id="bus">
+  <label for="bus">
+    <i class="fa-solid fa-bus"></i>
+    <span>Buses</span>
+  </label>
+
+  <input type="radio" name="service" id="cab">
+  <label for="cab">
+    <i class="fa-solid fa-taxi"></i>
+    <span>Cabs</span>
+  </label>
+
+  <input type="radio" name="service" id="cruise">
+  <label for="cruise">
+    <i class="fa-solid fa-ship"></i>
+    <span>Cruise</span>
+  </label>
+
+</div>
+<!-- SEARCH -->
+<div class="booking-form">
+
+  <div class="input-box">
+    <span>From</span>
+    <input type="text" placeholder="Enter city" value="">
+  </div>
+
+  <div class="input-box">
+    <span>To</span>
+    <input type="text" placeholder="Enter city" value="">
+  </div>
+
+  <div class="input-box">
+    <span>Travel Date</span>
+    <input type="date">
+  </div>
+
+  <div class="search-btn">
+    <button onclick="location.href='contact.html'">SEARCH</button>
+  </div>
+
+</div>
+
+</section>
+
+<!-- ===== ABOUT DETAILS ===== -->
+<section class="about-content">
+  <div class="about-wrapper">
+    <h1>About Stackly Travel</h1>
+    <div class="underline"></div>
+
+    <p>
+      Stackly Travel is built to simplify journeys across India. From buses to
+      trains and holiday planning, we focus on comfort, reliability, and smart
+      technology to make travel seamless for everyone.
+    </p>
+  </div>
+</section>
+<style>
+    /* ===== ABOUT CONTENT ===== */
+.about-content {
+    background-image: url("dood.webp");
+  padding: 90px 20px;
+  background: #ffffff;
+}
+
+.about-wrapper {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-wrapper h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #222;
+}
+
+.about-wrapper .underline {
+  width: 70px;
+  height: 4px;
+  background: #e60023; /* Stackly red */
+  margin: 14px auto 25px;
+  border-radius: 4px;
+}
+
+.about-wrapper p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .about-wrapper h1 {
+    font-size: 30px;
+  }
+
+  .about-wrapper p {
+    font-size: 16px;
+  }
+}
+.about-content {
+  position: relative;
+  padding: 90px 20px;
+
+  /* YOUR BACKGROUND IMAGE */
+  background-image: url("dood.webp"); /* <-- change this */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.about-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75); /* adjust opacity */
+  z-index: 0;
+}.about-wrapper {
+  position: relative;
+  z-index: 1;
+}
+.about-content {
+  width: 100%;
+  min-height: 60vh;        /* makes it tall */
+  padding: 100px 20px;
+
+  /* FULL BACKGROUND */
+  background-image: url("dood.webp"); /* your image */
+  background-size: cover;               /* FULL COVER */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+.about-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  text-align: center;
+}
+</style>
+<section class="discover-section">
+
+  <div class="discover-container">
+
+    <!-- LEFT IMAGE -->
+    <div class="discover-image">
+      <img src="crew.webp" alt="Discover Image">
+      <span class="circle-red"></span>
+      <span class="circle-dark"></span>
+    </div>
+
+    <!-- CENTER CONTENT -->
+    <div class="discover-content">
+      <small class="discover-tag">About Discover</small>
+
+      <h1>
+        Your Trusted Source<br>
+        Incredible Journey
+      </h1>
+
+      <p>
+        Mixtures Of A Metal And Other Elents. They Generally Provide Greater Over
+        Pure Metal, Which Usually Much Softer.
+      </p>
+
+      <ul class="features">
+        <li>✔ First Class Cabin</li>
+        <li>✔ Business Travel</li>
+        <li>✔ Premium Economy</li>
+        <li>✔ Now Selected Routes</li>
+      </ul>
+
+      <button class="about-btn">About Us</button>
+    </div>
+
+    <!-- RIGHT CARD -->
+    <div class="discover-card">
+      <h3>Destinations</h3>
+
+      <div class="globe">
+        🌍
+      </div>
+
+      <div class="experience">
+        <h2>39+</h2>
+        <span>YEAR EXPERIENCE</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<style>
+    /* ===== DISCOVER SECTION ===== */
+.discover-section {
+  background: #efe6de;
+  padding: 100px 20px;
+}
+
+.discover-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 0.8fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* IMAGE */
+.discover-image {
+  position: relative;
+}
+
+.discover-image img {
+  width: 100%;
+  border-radius: 50%;
+  border: 10px solid #fff;
+  z-index: 2;
+  position: relative;
+}
+
+/* decorative circles */
+.circle-red {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: #ff1e00;
+  border-radius: 50%;
+  top: -20px;
+  left: -20px;
+  z-index: 1;
+}
+
+.circle-dark {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 8px solid #222;
+  border-radius: 50%;
+  bottom: -10px;
+  right: -10px;
+}
+
+/* CONTENT */
+.discover-tag {
+  color: #ff1e00;
+  font-weight: 600;
+}
+
+.discover-content h1 {
+  font-size: 44px;
+  margin: 15px 0;
+  color: #222;
+}
+
+.discover-content p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* FEATURES */
+.features {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.features li {
+  color: #333;
+  font-weight: 500;
+}
+
+/* BUTTON */
+.about-btn {
+  background: #2b2735;
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+/* RIGHT CARD */
+.discover-card {
+  background: #2b2735;
+  color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.discover-card h3 {
+  margin-bottom: 20px;
+}
+
+.globe {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.experience {
+  background: #ff1e00;
+  padding: 25px;
+  border-radius: 16px;
+}
+
+.experience h2 {
+  font-size: 40px;
+}
+
+.experience span {
+  font-size: 14px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .discover-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .discover-image {
+    max-width: 280px;
+    margin: auto;
+  }
+}
+</style>
+<section class="ticket-services">
+
+  <!-- LEFT CONTENT -->
+  <div class="services-left">
+    <small class="section-tag">What Services Provide</small>
+
+    <h1>
+      We Make Easy <br>
+      Your Travel Booking
+    </h1>
+
+    <p>
+      Book flights, buses, and trains effortlessly with Stackly Travel.
+      Enjoy fast search, secure payments, and reliable journeys across India.
+    </p>
+
+    <p>
+      From daily commuters to long-distance travelers, we provide seamless
+      ticket booking with comfort and confidence.
+    </p>
+
+    <!-- SMALL TICKETS -->
+    <div class="mini-services">
+      <div class="mini-card">
+        ✈️
+        <span>Flight Tickets</span>
+      </div>
+      <div class="mini-card">
+        🚌
+        <span>Bus Tickets</span>
+      </div>
+      <div class="mini-card">
+        🚆
+        <span>Train Tickets</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT CARDS -->
+  <div class="services-right">
+
+    <div class="service-card white">
+      <div class="icon">✈️</div>
+      <h3>Flight Booking</h3>
+      <p>Book domestic & international flights at the best prices.</p>
+    </div>
+
+    <div class="service-card dark">
+      <div class="icon">🚌</div>
+      <h3>Bus Booking</h3>
+      <p>Choose from AC, Non-AC, Sleeper and Luxury buses.</p>
+    </div>
+
+    <div class="service-card dark">
+      <div class="icon">🚆</div>
+      <h3>Train Booking</h3>
+      <p>Reserve train tickets easily with live availability.</p>
+    </div>
+
+    <div class="service-card white">
+      <div class="icon">💳</div>
+      <h3>Secure Payments</h3>
+      <p>Safe and fast online payments with instant confirmation.</p>
+    </div>
+
+  </div>
+
+</section>
+<style>
+  /* ===== TICKET SERVICES SECTION ===== */
+.ticket-services {
+  background: radial-gradient(circle at top, #e9a3a3, #d96d6d);
+  padding: 100px 20px;
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr;
+  gap: 60px;
+  color: #fff;
+}
+
+/* LEFT */
+.services-left .section-tag {
+  color: #fff;
+  font-size: 14px;
+}
+
+.services-left h1 {
+  color: #ff0000;
+  font-size: 52px;
+  margin: 20px 0;
+  line-height: 1.2;
+}
+
+.services-left p {
+  color: #ddd;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* MINI CARDS */
+.mini-services {
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.mini-card {
+  background: #fff;
+  color: #000;
+  padding: 18px 22px;
+  border-radius: 14px;
+  text-align: center;
+  min-width: 120px;
+  font-weight: 600;
+}
+
+.mini-card span {
+  display: block;
+  margin-top: 6px;
+}
+
+/* RIGHT */
+.services-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+/* SERVICE CARDS */
+.service-card {
+  padding: 35px;
+  border-radius: 22px;
+}
+
+.service-card.white {
+  background: #fff;
+  color: #000;
+}
+
+.service-card.dark {
+  background: linear-gradient(145deg, #121626, #0b0f1c);
+}
+
+.service-card .icon {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.service-card h3 {
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .ticket-services {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .services-right {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-services {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+</style>
+<section class="why-choose">
+
+  <div class="why-overlay"></div>
+
+  <div class="why-content">
+
+    <div class="why-header">
+      <h2>Why Choose Us</h2>
+      <p>These popular destinations have a lot to offer</p>
+    </div>
+
+    <div class="why-cards">
+
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3>Best Price Guarantee</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h3>Easy & Quick Booking</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h3>Customer Care 24/7</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<style>
+    /* ===== WHY CHOOSE US ===== */
+.why-choose {
+  position: relative;
+  width: 100%;
+  padding: 100px 20px;
+
+  /* YOU will add bg image here */
+  background-color: #ffffff; /* fallback */
+   background-image: url("dood.webp"); 
+   background-size: cover; 
+  background-position: center; 
+   background-repeat: no-repeat; 
+}
+
+/* overlay for readability */
+.why-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+/* content wrapper */
+.why-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+/* header */
+.why-header h2 {
+  font-size: 36px;
+  color: #0b1c39;
+  margin-bottom: 10px;
+}
+
+.why-header p {
+  color: #6b7280;
+  margin-bottom: 60px;
+}
+
+/* cards */
+.why-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.why-card {
+  padding: 30px;
+}
+
+.why-icon {
+  font-size: 48px;
+  color: #2563eb;
+  margin-bottom: 20px;
+}
+
+.why-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #0b1c39;
+}
+
+.why-card p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .why-cards {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .why-header h2 {
+    font-size: 28px;
+  }
+}
+</style>
+<section class="blog-section">
+
+  <!-- HEADER -->
+  <div class="blog-header">
+    <div>
+      <span class="blog-tag">News And Blog</span>
+      <h2>Recent Story & Articles</h2>
+    </div>
+
+    <a href="contact.html" class="view-all-btn">View All Blogs</a>
+  </div>
+
+  <!-- BLOG CARDS -->
+  <div class="blog-grid">
+
+    <!-- CARD 1 -->
+    <div class="blog-card">
+      <img src="blog.webp" alt="Blog Image">
+
+      <div class="blog-content">
+        <span class="blog-date">📅 26, January 2026</span>
+        <h3>Travel The Most Beautiful</h3>
+        <p>Lorem Ipsum Available. But Id Majority Have Alteration In Some Form.</p>
+
+        <div class="blog-footer">
+          <a href="contact.html" class="read-more">Read More →</a>
+          <button class="share-btn">⤴</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="blog-card">
+      <img src="blog2.webp" alt="Blog Image">
+
+      <div class="blog-content">
+        <span class="blog-date">📅 26, January 2026</span>
+        <h3>Sustainable Travel Initiatives</h3>
+        <p>Lorem Ipsum Available. But Id Majority Have Alteration In Some Form.</p>
+
+        <div class="blog-footer">
+          <a href="contact.html" class="read-more">Read More →</a>
+          <button class="share-btn">⤴</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="blog-card">
+      <img src="blog3.webp" alt="Blog Image">
+
+      <div class="blog-content">
+        <span class="blog-date">📅 26, January 2026</span>
+        <h3>Customized Travel Packages</h3>
+        <p>Lorem Ipsum Available. But Id Majority Have Alteration In Some Form.</p>
+
+        <div class="blog-footer">
+          <a href="contact.html" class="read-more">Read More →</a>
+          <button class="share-btn">⤴</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+<style>
+    /* ===== BLOG SECTION ===== */
+.blog-section {
+  padding: 100px 20px;
+  background: #ffffff;
+}
+
+.blog-header {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.blog-tag {
+  color: #ff1e00;
+  font-family: cursive;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.blog-header h2 {
+  font-size: 42px;
+  color: #2b2735;
+}
+
+/* VIEW ALL BUTTON */
+.view-all-btn {
+  background: #2b2735;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* GRID */
+.blog-grid {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.blog-card {
+  background: #f4ede6;
+  border-radius: 20px;
+  padding: 15px;
+  border: 1px dashed #d6cfc8;
+}
+
+.blog-card img {
+  width: 100%;
+  border-radius: 16px;
+  height: 230px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.blog-content {
+  padding: 20px 10px;
+}
+
+.blog-date {
+  font-size: 14px;
+  color: #777;
+}
+
+.blog-content h3 {
+  font-size: 22px;
+  margin: 10px 0;
+  color: #2b2735;
+}
+
+.blog-content p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.blog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.read-more {
+  color: #2b2735;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  color: #ff1e00;
+}
+
+.share-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #2b2735;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .blog-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-header h2 {
+    font-size: 30px;
+  }
+}
+</style>
+<section class="luxury-flight">
+
+  <div class="luxury-container">
+
+    <!-- LEFT IMAGES -->
+    <div class="luxury-images">
+      <img src="airways.webp" class="main-img" alt="Flight Crew">
+      <img src="air.webp" class="small-img" alt="Crew Member">
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="luxury-content">
+
+      <span class="luxury-tag">Know About Flight</span>
+
+      <h2>
+        Experience The Luxury<br>
+        Private Jet
+      </h2>
+
+      <p class="luxury-desc">
+        Choosing The Right Private Jet Is Essential For A Comfortable,
+        Efficient That And Travel Experience. Whether You're Flying For Business.
+      </p>
+
+      <div class="luxury-feature">
+        <div class="icon-circle">
+          ✈️
+        </div>
+        <div>
+          <h4>Easy & Quick Booking</h4>
+          <p>
+            Right Private Jet Is Essential For A Comfortable,
+            Efficient That And Travel Experience.
+          </p>
+        </div>
+      </div>
+
+      <ul class="luxury-points">
+        <li>✔ Private Jet Is Essential For A Comfortable</li>
+        <li>✔ Essential For A Comfortable</li>
+      </ul>
+
+      <div class="luxury-actions">
+        <button class="discover-btn" onclick="location.href='contact.html'">
+  Discover More
+</button>
+
+        <div class="call-box">
+          <span>📞</span>
+          <div>
+            <small>Call Us Free</small>
+            <strong>+1568 562 889</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<style>
+/* ===== LUXURY FLIGHT SECTION ===== */
+.luxury-flight {
+  padding: 100px 20px;
+  background: #ffffff;
+}
+
+.luxury-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* LEFT IMAGES */
+.luxury-images {
+  position: relative;
+}
+
+.main-img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.small-img {
+  position: absolute;
+  bottom: -40px;
+  right: -30px;
+  width: 220px;
+  border-radius: 20px;
+  border: 8px solid #fff;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* CONTENT */
+.luxury-tag {
+  color: #ff1e00;
+  font-family: cursive;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.luxury-content h2 {
+  font-size: 44px;
+  color: #2b2735;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.luxury-desc {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+/* FEATURE BOX */
+.luxury-feature {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.icon-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #ffe6e2;
+  color: #ff1e00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+/* POINTS */
+.luxury-points {
+  list-style: none;
+  margin: 20px 0 30px;
+}
+
+.luxury-points li {
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ACTIONS */
+.luxury-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.discover-btn {
+  background: #2b2735;
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.call-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.call-box span {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #ffe6e2;
+  color: #ff1e00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .luxury-container {
+    grid-template-columns: 1fr;
+  }
+
+  .small-img {
+    position: static;
+    width: 180px;
+    margin-top: 20px;
+  }
+
+  .luxury-content h2 {
+    font-size: 30px;
+  }
+
+  .luxury-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+<section class="luxury-flight">
+
+  <div class="luxury-container">
+
+    <!-- LEFT IMAGES -->
+    <div class="luxury-images">
+      <img src="bgg.webp" class="main-img" alt="Luxury Bus">
+      <img src="bus.webp" class="small-img" alt="Bus Staff">
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="luxury-content">
+
+      <span class="luxury-tag">Know About Bus</span>
+
+      <h2>
+        Experience The Comfort<br>
+        Luxury Bus Travel
+      </h2>
+
+      <p class="luxury-desc">
+        Choosing the right bus is essential for a comfortable and safe journey.
+        Whether you're traveling overnight or during the day, we ensure the best experience.
+      </p>
+
+      <div class="luxury-feature">
+        <div class="icon-circle">🚌</div>
+        <div>
+          <h4>Easy & Quick Booking</h4>
+          <p>
+            Book AC, Non-AC, Sleeper and Luxury buses with instant confirmation.
+          </p>
+        </div>
+      </div>
+
+      <ul class="luxury-points">
+        <li>✔ Comfortable Seating & Clean Buses</li>
+        <li>✔ Live Tracking & Trusted Operators</li>
+      </ul>
+
+      <div class="luxury-actions">
+       <button class="discover-btn" onclick="location.href='contact.html'">
+  Discover More
+</button>
+
+        <div class="call-box">
+          <span>📞</span>
+          <div>
+            <small>Call Us Free</small>
+            <strong>+1568 562 889</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="luxury-flight">
+
+  <div class="luxury-container">
+
+    <!-- LEFT IMAGES -->
+    <div class="luxury-images">
+      <img src="train.webp" class="main-img" alt="Train Travel">
+      <img src="trainn.webp" class="small-img" alt="Train Staff">
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="luxury-content">
+
+      <span class="luxury-tag">Know About Train</span>
+
+      <h2>
+        Experience The Ease<br>
+        Train Journey
+      </h2>
+
+      <p class="luxury-desc">
+        Train travel offers affordability, comfort, and convenience.
+        Book your tickets easily with live availability and seat selection.
+      </p>
+
+      <div class="luxury-feature">
+        <div class="icon-circle">🚆</div>
+        <div>
+          <h4>Easy & Quick Booking</h4>
+          <p>
+            Reserve train tickets easily with real-time availability and PNR status.
+          </p>
+        </div>
+      </div>
+
+      <ul class="luxury-points">
+        <li>✔ Multiple Classes & Seat Options</li>
+        <li>✔ Live Train Status & Updates</li>
+      </ul>
+
+      <div class="luxury-actions">
+        <button class="discover-btn" onclick="location.href='contact.html'">
+  Discover More
+</button>
+
+        <div class="call-box">
+          <span>📞</span>
+          <div>
+            <small>Call Us Free</small>
+            <strong>+1568 562 889</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <a href="home.html">
+        <img src="logo.webp" alt="Stackly Logo" class="footer-logo">
+      </a>
+
+      <p>
+        We provide smart, reliable, and modern solutions to help your business
+        grow digitally with confidence.
+      </p>
+
+      <div class="support">
+        <span>📞 Call Support</span>
+        <h3><a href="contact.html">+91 98765 43210</a></h3>
+      </div>
+
+      <div class="social-icons">
+        <a href="404.html"><i class="fab fa-facebook-f"></i></a>
+        <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
+        <a href="404.html"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- USEFUL LINKS -->
+    <div class="footer-links">
+      <h4>Useful Links</h4>
+      <ul>
+        <li><a href="404.html">› Company Profile</a></li>
+        <li><a href="404.html">› Help Center</a></li>
+        <li><a href="404.html">› Contact Us</a></li>
+        <li><a href="404.html">› Social Marketing</a></li>
+        <li><a href="404.html">› Blog</a></li>
+      </ul>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="footer-links">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="404.html">› Application Assistance</a></li>
+        <li><a href="404.html">› Ticket Guidance</a></li>
+        <li><a href="404.html">› Documentation Support</a></li>
+        <li><a href="404.html">› Social Marketing</a></li>
+        <li><a href="404.html">› License</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- COPYRIGHT -->
+  <div class="footer-bottom">
+    <p>Copyright © 2026 <span>Stackly</span>. All Rights Reserved.</p>
+    <div class="bottom-links">
+      <a href="404.html">Privacy Policy</a>
+      <a href="404.html">FAQ</a>
+      <a href="404.html">Feedback</a>
+    </div>
+  </div>
+</footer>
+<style>
+  .footer{
+  background:#0f172a;
+  color:#fff;
+  font-family:'Poppins',sans-serif;
+}
+
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:40px;
+}
+
+.footer-logo{
+  width:160px;
+  margin-bottom:20px;
+}
+
+.footer-brand p{
+  color:#cbd5e1;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.support{
+  margin:20px 0;
+}
+
+.support h3 a{
+  color:#ff3b3b;
+  font-size:20px;
+  text-decoration:none;
+}
+
+.social-icons a{
+  display:inline-flex;
+  margin-right:10px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#1e293b;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  transition:.3s;
+}
+
+.social-icons a:hover{
+  background:#ff3b3b;
+}
+
+.footer-links h4{
+  margin-bottom:20px;
+  font-size:18px;
+}
+
+.footer-links ul{
+  list-style:none;
+  padding:0;
+}
+
+.footer-links ul li{
+  margin-bottom:12px;
+}
+
+.footer-links ul li a{
+  color:#cbd5e1;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.footer-links ul li a:hover{
+  color:#ff3b3b;
+  padding-left:5px;
+}
+
+.footer-bottom{
+  border-top:1px solid #1e293b;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.footer-bottom span{
+  color:#ff3b3b;
+}
+
+.bottom-links a{
+  margin-left:20px;
+  color:#cbd5e1;
+  text-decoration:none;
+}
+
+.bottom-links a:hover{
+  color:#ff3b3b;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .footer-container{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:600px){
+  .footer-container{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .social-icons{
+    justify-content:center;
+  }
+
+  .footer-bottom{
+    text-align:center;
+    gap:10px;
+  }
+}
+</style>
