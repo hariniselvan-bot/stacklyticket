@@ -745,14 +745,14 @@ document.addEventListener("DOMContentLoaded", () => {
   <!-- HEADER -->
   <div class="offers-header">
     <h2>Offers for you</h2>
-    <a href="404.html">View more</a>
+    <a href="404.html" class="view-more-btn">View More</a>
   </div>
 
   <!-- FILTER TABS -->
   <div class="offer-tabs">
     <button class="tab active" data-filter="all">All</button>
-    <button class="tab" data-filter="bus">Bus</button>
-    <button class="tab" data-filter="train">Train</button>
+    <a href="contact.html" class="tab">Bus</a>
+<a href="contact.html" class="tab">Train</a>
   </div>
 
   <!-- OFFER CARDS -->
@@ -828,7 +828,55 @@ document.addEventListener("DOMContentLoaded", () => {
   font-family:Arial, sans-serif;
   background:#fff;
 }
+/* TAB BUTTON STYLE */
+.view-more-btn{
+    position:relative;
+    color:#2e7d32;
+    text-decoration:none;
+    font-weight:600;
+}
 
+.view-more-btn::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-4px;
+    width:0%;
+    height:2px;
+    background:#2e7d32;
+    transition:0.3s ease;
+}
+
+.view-more-btn:hover::after{
+    width:100%;
+}
+.tab{
+    display:inline-block;
+    padding:12px 30px;
+    margin:10px 10px 0 0;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:500;
+    font-size:15px;
+    color:#1b5e20;
+    background:#e8f5e9;
+    border:2px solid #2e7d32;
+    transition:all 0.3s ease;
+}
+
+/* Hover Effect */
+
+.tab:hover{
+    background:#2e7d32;
+    color:#ffffff;
+    transform:translateY(-3px);
+}
+
+/* Optional Active Click Effect */
+
+.tab:active{
+    transform:scale(0.95);
+}
 /* OFFERS */
 .offers-section{
   padding:60px 80px;
