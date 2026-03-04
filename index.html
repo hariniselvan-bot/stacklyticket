@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loading | Stackly</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+/* LOADER SCREEN */
+.loader{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#b30000,#2b2b2b);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  z-index:9999;
+}
+
+/* LOGO / TEXT */
+.loader h1{
+  font-size:36px;
+  letter-spacing:3px;
+  margin-bottom:40px;
+}
+
+/* VEHICLES */
+.vehicles{
+  display:flex;
+  gap:40px;
+}
+
+.vehicle{
+  font-size:44px;
+  animation:move 1.4s infinite ease-in-out;
+}
+
+.vehicle:nth-child(2){ animation-delay:.2s; }
+.vehicle:nth-child(3){ animation-delay:.4s; }
+
+@keyframes move{
+  0%{ transform:translateX(0); opacity:.6; }
+  50%{ transform:translateX(35px); opacity:1; }
+  100%{ transform:translateX(0); opacity:.6; }
+}
+
+/* LOADING TEXT */
+.loading-text{
+  margin-top:30px;
+  font-size:14px;
+  letter-spacing:2px;
+  opacity:.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+  <!-- Replace text with logo image if needed -->
+  <h1>STACKLY</h1>
+
+  <div class="vehicles">
+    <div class="vehicle"><i class="fa-solid fa-plane"></i></div>
+    <div class="vehicle"><i class="fa-solid fa-bus"></i></div>
+    <div class="vehicle"><i class="fa-solid fa-train"></i></div>
+  </div>
+
+  <div class="loading-text">Loading, please wait...</div>
+</div>
+
+<script>
+/* OPTIONAL AUTO REDIRECT */
+setTimeout(()=>{
+  window.location.href = "home.html"; // change page name if needed
+},3000);
+</script>
