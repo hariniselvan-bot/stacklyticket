@@ -506,7 +506,9 @@ td{
 function openMobileMenu(){
   document.getElementById("mobileMenu").classList.add("active");
 }
-
+function closeMobileMenu(){
+  document.getElementById("mobileMenu").classList.remove("active");
+}
 function toggleHomeDropdown(){
   const menu = document.getElementById("mobileHomeMenu");
   const home = document.querySelector(".mobile-home");
